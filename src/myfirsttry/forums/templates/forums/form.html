@@ -1,0 +1,20 @@
+{% extends 'forums/bass.html' %} {% block content %}
+<form action="{% url 'forums:create' %}" method="POST"> {% csrf_token %}
+    <!-- <div class="form-group">
+        <label for="topic">Topic</label>
+        <input type="text" class="form-control" id="topic" name="topic" placeholder="MyTopic">
+    </div>
+    <div class="form-group">
+        <label for="category">Category</label>
+        <input type="text" class="form-control" id="category" name="category" placeholder="MyCategory">
+    </div>
+    <div class="form-group">
+        <label for="message">Message here!</label>
+        <textarea class="form-control" id="message" name="message" rows="3"></textarea>
+    </div> -->
+    {% if error %} {{ error }} {% endif %} {{ form.as_p }}
+
+    <button type="submit" class="btn btn-default">Send</button>
+
+</form>
+{% endblock content %}

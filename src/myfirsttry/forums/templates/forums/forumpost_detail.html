@@ -1,0 +1,101 @@
+{% extends 'forums/bass.html' %} {% block content %}
+<div class="card mb-4">
+
+    <div class="container-fluid mt-10">
+        <div class="row">
+
+            <!-- Portfolio Item Heading -->
+            <h1 class="my-4">{{ object.topic }}
+            </h1>
+
+            <!-- Portfolio Item Row -->
+            <div class="row">
+
+                <div class="col-md-4">
+                    <img class="img-fluid" src="http://placehold.it/750x500" alt="">
+                </div>
+
+                <div class="col-md-4">
+                    <h3 class="my-3"><small>Message : </small>{{ object.message }}</h3>
+
+                    <h3 class="my-3">Category</h3>
+                    <ul>
+                        <li>{{ object.category }}</li>
+
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<div class="card-group">
+    <div class="container-fluid mt-100">
+        <div class="row">
+            <div class="col-md-100">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <div class="media flex-wrap w-100 align-items-center">
+                            <h3>Comments</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% for comment in comments %}
+<div class="container-fluid mt-100">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <div class="media flex-wrap w-100 align-items-center">
+                        <img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1574583246/AAA/2.jpg" class="d-block ui-w-40 rounded-circle" alt="" />
+                        <div class="media-body ml-3">
+                            <a href="javascript:void(0)" data-abc="true">{{ comment.user.username }}</a>
+                            <div class="text-muted small">{{ comment.timestamp|timesince }}</div>
+                        </div>
+                        <div class="text-muted small ml-3">
+                            <div>Member since <strong>{{ comment.user.date_joined }}</strong></div>
+                            <div><strong>{{ comment.user.forumpost_set.count }}</strong> posts</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p>
+                        {{ comment.content }}
+
+                    </p>
+                    <!-- <p>
+                        <h4>Category :</h4> {{ comment.content_object }}
+                    </p> -->
+                </div>
+                <div class="card-footer d-flex flex-wrap justify-content-between align-items-center px-0 pt-0 pb-3">
+                    <div class="px-4 pt-3">
+                        <a href="javascript:void(0)" class="text-muted d-inline-flex align-items-center align-middle" data-abc="true">
+                            <i class="fa fa-heart text-danger"></i>&nbsp;
+                        </a>
+                        <span class="align-middle">445</span>
+                        <span class="text-muted d-inline-flex align-items-center align-middle ml-4">
+        <i class="fa fa-eye text-muted fsize-3"></i>&nbsp;
+        <span class="align-middle">14532</span>
+                        </span>
+                    </div>
+                    <div class="px-4 pt-3">
+                        <button type="button" class="btn btn-primary">
+        <i class="ion ion-md-create"></i>&nbsp; Reply
+      </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endfor %} {% endblock content %}

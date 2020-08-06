@@ -1,0 +1,10 @@
+{% extends 'base.html' %} {% block content %}
+<h1> {{ object.title|title }} </h1>
+<hr>{{ object.price }}
+<hr>{{ object.description }}
+<hr>{{ object.featured }}
+
+
+
+
+<br> {% if object.summary %} {{ object.summary }} {% else %} nono {% endif %} {% endblock content %}

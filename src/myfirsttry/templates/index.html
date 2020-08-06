@@ -1,0 +1,36 @@
+{% extends 'base.html' %} {% block title %} index hai ye {% endblock title %} {% block content %}
+
+<h1>this is a Index </h1>
+<table class="table table-striped table-inverse table-responsive">
+    <thead class="thead-inverse">
+        <tr>
+            <th>Resataurant Name</th>
+            <th>Location</th>
+            <th>Cuisine</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for foodlove in resto %}
+        <tr>{% for foods in foodlove %} {% if foods == '1' or foods == "mulund" %}
+            <td>{{ foods }}
+
+            </td>
+
+            {% elif True %}
+            <td>{{ foods }}</td>
+
+
+            {% endif %}{% endfor %}</tr>
+        {% endfor %}
+    </tbody>
+
+
+</table>
+
+
+
+
+
+{{ resto.0. }} {% endblock %}

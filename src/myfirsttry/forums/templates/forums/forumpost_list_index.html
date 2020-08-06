@@ -1,0 +1,74 @@
+{% extends 'forums/bass.html' %} {% block content %}
+
+
+<div class="card mb-3">
+    <center>
+        <h3>Forums</h3>
+    </center>
+
+    <div class="card-header pr-0 pl-0">
+        <div class="row no-gutters align-items-center w-100">
+            <div class="col font-weight-bold pl-3">Topic</div>
+            <div class="d-none d-md-block col-6 text-muted">
+                <div class="row no-gutters align-items-center">
+                    <div class="col-3">Category</div>
+                    <div class="col-3">Message</div>
+                    <div class="col-6">Last update</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr class="m-0"> {% if object_list %} {% for object in object_list %}
+    <div class="card-body py-3">
+        <div class="row no-gutters align-items-center">
+            <div class="col"><a href="{{ object.get_absolute_url }}" class="text-big font-weight-semibold" data-abc="true">{{ object.topic }}</a></div>
+            <div class="d-none d-md-block col-6">
+                <div class="row no-gutters align-items-center">
+                    <div class="col-3">{{ object.category }}</div>
+                    <div class="col-3">{{ object.message }}</div>
+                    <!-- <div class="media col-6 align-items-center"> <img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1574583319/AAA/3.jpg" alt="" class="d-block ui-w-30 rounded-circle">
+                        <div class="media-body flex-truncate ml-2"> <a href="javascript:void(0)" class="d-block text-truncate" data-abc="true">We have created a new feature for developers and designers</a> -->
+                    <div class="text-muted  text-truncate">{{ object.timestamp }} &nbsp;&nbsp;
+                        <!-- <a href="javascript:void(0)" class="text-muted" data-abc="true">Rodie Angel</a> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr class="m-0"> {% endfor %} {% elif object %}
+    <div class="card-body py-3">
+        <div class="row no-gutters align-items-center">
+            <div class="col"><a href="javascript:void(0)" class="text-big font-weight-semibold" data-abc="true">{{ object.topic }}</a></div>
+            <div class="d-none d-md-block col-6">
+                <div class="row no-gutters align-items-center">
+                    <div class="col-3">{{ object.category }}</div>
+                    <div class="col-3">{{ object.message }}</div>
+                    <!-- <div class="media col-6 align-items-center"> <img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1574583319/AAA/3.jpg" alt="" class="d-block ui-w-30 rounded-circle">
+                        <div class="media-body flex-truncate ml-2"> <a href="javascript:void(0)" class="d-block text-truncate" data-abc="true">We have created a new feature for developers and designers</a> -->
+                    <div class="text-muted  text-truncate">{{ object.timestamp }} &nbsp;&nbsp;
+                        <!-- <a href="javascript:void(0)" class="text-muted" data-abc="true">Rodie Angel</a> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr class="m-0"> {% else %}
+    <div class="card-body py-3">
+        <div class="row no-gutters align-items-center">
+            <div class="col">
+                <a href="javascript:void(0)" class="text-big font-weight-semibold" data-abc="true"></a>
+            </div>
+            <div class="d-none d-md-block col-6">
+                <div class="row no-gutters align-items-center">
+                    <div class="col-12">Category not found</div>
+                    <div class="text-muted  text-truncate"> &nbsp;&nbsp;
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> {% endif %}
+
+</div>
+
+{% endblock content %}

@@ -1,0 +1,18 @@
+{% extends 'base.html' %} {% block content %}
+
+<h1>this is a Contact</h1>
+<p><i class="fa fa-align-right" aria-hidden="true">just something new for {{request.user.is_authenticated}}</i></p>
+<p><i class="fa fa-apple" aria-hidden="true">{{request.user.email}}</i></p>
+<p>
+    {{ my_text|capfirst|title }},{{ my_number }},{{ my_list.1 }}
+</p>
+<i class="fas fa-list-ol">
+
+    {% for items in my_list %}<li>
+    {#{{ forloop.counter }}#} {{ items }}</li>
+    {% endfor %}
+
+
+
+    {{ htmlyo|striptags|slugify }}
+</i> {% endblock content %}

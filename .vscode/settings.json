@@ -1,0 +1,9 @@
+{
+    "python.autoComplete.extraPaths": [
+    
+    ],
+    "python.pythonPath": "/home/swedel/venv/bin/python",
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true,
+
+}
