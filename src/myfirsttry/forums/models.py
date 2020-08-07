@@ -4,6 +4,7 @@ from .utils import unique_slug_generator
 from django.conf import settings  
 from django.urls import reverse
 from comments.models import Comment
+from django.contrib.contenttypes.models import ContentType
 
 User = settings.AUTH_USER_MODEL 
 
@@ -46,7 +47,8 @@ class ForumPost(models.Model):
 
     @property
     def get_content_type(self):
-        instance = selfcontent_type = ContentType.objects.get_for_model(instance.__class__)
+        instance = self
+        content_type = ContentType.objects.get_for_model(instance.__class__)
         return content_type
     
 

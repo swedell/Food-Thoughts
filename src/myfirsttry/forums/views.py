@@ -96,13 +96,14 @@ class ForumPostDetailView(FormMixin,DetailView):
     model = ForumPost  
     form_class = CommentForm
     
-    # def get_initial(self):
-    #     instance = self.object()
-    #     initial_data = {
-    #         "cotent_type ": instance.get_content_type,
-    #         "object_id": instance.id
-    #     }
-    #     return initial_data
+    def get_initial(self):
+        instance = self.get_object()
+        initial_data = {
+            "content_type ": instance.get_content_type,
+            "object_id": instance.id
+        }
+        print("initial ",initial_data)
+        return initial_data
 
     def get_success_url(self):
         return reverse('forums:detail',kwargs={'slug':self.object.slug})
@@ -112,15 +113,15 @@ class ForumPostDetailView(FormMixin,DetailView):
             return HttpResponseForbidden()
         self.object = self.get_object()
         comment_form = self.get_form()
+        print("submitted ",comment_form)
         if comment_form.is_valid():
             return self.form_valid(comment_form)
         else:
             return self.form_invalid(comment_form)
 
     def form_valid(self, form):
-
         comment_form = form.cleaned_data
-        print(comment_form) 
+        print("cleaned ",comment_form) 
         return super().form_valid(comment_form)
 
 
