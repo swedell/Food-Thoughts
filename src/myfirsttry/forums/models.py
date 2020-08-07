@@ -3,6 +3,7 @@ from django.db.models.signals import pre_save, post_save
 from .utils import unique_slug_generator
 from django.conf import settings  
 from django.urls import reverse
+from comments.models import Comment
 
 User = settings.AUTH_USER_MODEL 
 
@@ -37,6 +38,16 @@ class ForumPost(models.Model):
     @property 
     def title(self):
         return(self.topic)
+    
+    @property
+    def get_comments(self):
+        qs = Comment.objects.filter_by_instance(self)
+        return qs 
+
+    @property
+    def get_content_type(self):
+        instance = selfcontent_type = ContentType.objects.get_for_model(instance.__class__)
+        return content_type
     
 
 #-----------------these are signals-------------

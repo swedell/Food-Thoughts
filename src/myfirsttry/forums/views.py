@@ -1,20 +1,25 @@
 from urllib.parse import urlparse
 
-from django.contrib.auth.decorators import login_required
+# from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.contenttypes.models import ContentType
+
+from django.views.generic.edit import FormMixin
+from django.views.generic.detail import DetailView
+# from django.contrib.contenttypes.models import ContentType
 
 from django.db.models import Q
-from django.shortcuts import (get_list_or_404, get_object_or_404, redirect,
-                              render)
-from django.utils.http import urlencode
+# from django.shortcuts import (get_list_or_404, get_object_or_404, redirect,
+#                               render)
+# from django.utils.http import urlencode
 # from django.views import View
-from django.views.generic import CreateView, DetailView, ListView, TemplateView
-
+from django.views.generic import CreateView, DetailView, ListView
 from comments.models import Comment
+from comments.forms import CommentForm  
 
 from .forms import ForumPostModelForm
 from .models import ForumPost
+from django.urls import reverse
+from django.http import HttpResponseForbidden
 
 # from comments.models import Comment
 
@@ -87,19 +92,50 @@ class CategoryView(ListView):
         return context
 
 
-class ForumPostDetailView(DetailView):
-    model = ForumPost   
+class ForumPostDetailView(FormMixin,DetailView):
+    model = ForumPost  
+    form_class = CommentForm
     
+    # def get_initial(self):
+    #     instance = self.object()
+    #     initial_data = {
+    #         "cotent_type ": instance.get_content_type,
+    #         "object_id": instance.id
+    #     }
+    #     return initial_data
+
+    def get_success_url(self):
+        return reverse('forums:detail',kwargs={'slug':self.object.slug})
+
+    def post(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return HttpResponseForbidden()
+        self.object = self.get_object()
+        comment_form = self.get_form()
+        if comment_form.is_valid():
+            return self.form_valid(comment_form)
+        else:
+            return self.form_invalid(comment_form)
+
+    def form_valid(self, form):
+
+        comment_form = form.cleaned_data
+        print(comment_form) 
+        return super().form_valid(comment_form)
+
+
     def get_context_data(self,*args,**kwargs):
         context = super().get_context_data(**kwargs)
-        context['list_of_categories'] = all_cat 
-        
-        cont_type = ContentType.objects.get_for_model(ForumPost)
-        # print(self.get_object().id)
-        obj_id = self.get_object().id
+        context['list_of_categories'] = all_cat
+    
+        # instance = self.get_object()
 
-        comments = Comment.objects.filter(content_type=cont_type,object_id=obj_id)
-        context['comments'] = comments  
+        # cont_type = ContentType.objects.get_for_model(ForumPost)
+        # # print(self.get_object().id)
+        # obj_id = self.get_object().id
+
+        # comments = Comment.objects.filter_by_instance(instance)
+        # context['comments'] = comments  
 
     # context['comments'] = Comment.objects.filter(forum=context.get('object'))
     # print(context)

@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "../../../../"
+		}
+	],
+	"settings": {
+		"python.venvPath": "/home/swedel/venv/bin",
+		"python.pythonPath": "/home/swedel/venv/bin/python3.8"
+	}
+}
