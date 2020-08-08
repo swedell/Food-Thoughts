@@ -5,7 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.views.generic.edit import FormMixin
 from django.views.generic.detail import DetailView
-# from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.models import ContentType
 
 from django.db.models import Q
 # from django.shortcuts import (get_list_or_404, get_object_or_404, redirect,
@@ -99,10 +99,9 @@ class ForumPostDetailView(FormMixin,DetailView):
     def get_initial(self):
         instance = self.get_object()
         initial_data = {
-            "content_type ": instance.get_content_type,
-            "object_id": instance.id
+            "object_id": instance.id,
+            "content_type": instance.get_content_type.id
         }
-        print("initial ",initial_data)
         return initial_data
 
     def get_success_url(self):
@@ -111,18 +110,33 @@ class ForumPostDetailView(FormMixin,DetailView):
     def post(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             return HttpResponseForbidden()
+
         self.object = self.get_object()
+
         comment_form = self.get_form()
-        print("submitted ",comment_form)
+
         if comment_form.is_valid():
             return self.form_valid(comment_form)
+
         else:
             return self.form_invalid(comment_form)
 
     def form_valid(self, form):
-        comment_form = form.cleaned_data
-        print("cleaned ",comment_form) 
-        return super().form_valid(comment_form)
+        input_content_type = form.cleaned_data.get("content_type")
+        print(input_content_type)
+        content_type = ContentType.objects.get(id=input_content_type)
+
+        obj_id = form.cleaned_data.get('object_id')
+
+        content_data = form.cleaned_data.get("content")
+
+
+        new_comment, created = Comment.objects.get_or_create(user = self.request.user,content_type= content_type,object_id = obj_id,content = content_data)
+						
+        return super().form_valid(form)
+        
+
+        
 
 
     def get_context_data(self,*args,**kwargs):

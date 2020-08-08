@@ -21,7 +21,7 @@
                     <h3 class="my-3">Category</h3>
                     <ul>
                         <li>{{ object.category }}</li>
-
+                        <li>{{ object.get_content_type }}</li>
                     </ul>
                 </div>
 
@@ -69,6 +69,7 @@
                 <div class="card-body">
                     {% csrf_token %} {{ form.as_p }}
                     <!-- <p>
+
                         <h4>Category :</h4> {{ comment.content_object }}
                     </p> -->
                 </div>
