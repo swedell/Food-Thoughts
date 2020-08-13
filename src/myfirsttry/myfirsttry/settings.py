@@ -43,11 +43,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
-    
+    'crispy_forms',
+    'django_extensions',    
     
     #my apps
     'forums',
     'comments',
+   
 
     
     
@@ -57,6 +59,8 @@ INSTALLED_APPS = [
     'blogs',
     
 ]
+
+CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 MIDDLEWARE = [
 

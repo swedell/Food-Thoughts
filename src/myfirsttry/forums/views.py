@@ -95,7 +95,7 @@ class CategoryView(ListView):
 class ForumPostDetailView(FormMixin,DetailView):
     model = ForumPost  
     form_class = CommentForm
-    
+#what to show to the show before the user fills the form (prefilled data)
     def get_initial(self):
         instance = self.get_object()
         initial_data = {
@@ -103,10 +103,10 @@ class ForumPostDetailView(FormMixin,DetailView):
             "content_type": instance.get_content_type.id
         }
         return initial_data
-
+#what you do after new commet has bee created
     def get_success_url(self):
         return reverse('forums:detail',kwargs={'slug':self.object.slug})
-
+#getting data from form filled by user
     def post(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             return HttpResponseForbidden()
@@ -120,10 +120,24 @@ class ForumPostDetailView(FormMixin,DetailView):
 
         else:
             return self.form_invalid(comment_form)
-
+#create a comment
     def form_valid(self, form):
+        parent_obj = None
+        parent_id = None
+
+        try : 
+            parent_id = int(self.request.POST.get("parent_id"))
+        except : 
+            parent_id = None
+        if parent_id : 
+            parent_qs = Comment.objects.filter(id = parent_id)
+            if parent_qs.exists():
+                parent_obj = parent_qs.first()
+
+
+        
         input_content_type = form.cleaned_data.get("content_type")
-        print(input_content_type)
+        # print(input_content_type)
         content_type = ContentType.objects.get(id=input_content_type)
 
         obj_id = form.cleaned_data.get('object_id')
@@ -131,14 +145,12 @@ class ForumPostDetailView(FormMixin,DetailView):
         content_data = form.cleaned_data.get("content")
 
 
-        new_comment, created = Comment.objects.get_or_create(user = self.request.user,content_type= content_type,object_id = obj_id,content = content_data)
-						
+        new_comment, created = Comment.objects.get_or_create(user = self.request.user,content_type= content_type,object_id = obj_id,content = content_data,parent = parent_obj)
+         
+        
         return super().form_valid(form)
         
-
         
-
-
     def get_context_data(self,*args,**kwargs):
         context = super().get_context_data(**kwargs)
         context['list_of_categories'] = all_cat
