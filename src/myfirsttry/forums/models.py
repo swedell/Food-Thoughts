@@ -10,6 +10,9 @@ User = settings.AUTH_USER_MODEL
 
 # Create your models here.
 class ForumPost(models.Model):
+
+    # user = modes.Foreignkey(User,default=1, null=true, on_delete=models.SET)
+    image = models.ImageField(upload_to = 'media/', blank = True, null=True)
     owner = models.ForeignKey(User,on_delete=models.CASCADE,blank=True)
     topic = models.CharField(max_length = 150)
     category = models.CharField(max_length = 50)

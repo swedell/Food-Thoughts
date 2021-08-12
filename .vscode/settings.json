@@ -2,7 +2,7 @@
     "python.autoComplete.extraPaths": [
     
     ],
-    "python.pythonPath": "/home/swedel/venv/bin/python",
+    "python.pythonPath": "/home/swedel/.local/share/virtualenvs/Food-Thoughts-iYNRoJKO/bin/python",
     "python.linting.pylintEnabled": true,
     "python.linting.enabled": true,
 

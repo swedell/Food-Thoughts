@@ -1,4 +1,5 @@
 {% extends 'forums/bass.html' %} {% block content %}
+{% load static %}
 {% load crispy_forms_tags %}
 <div class="card mb-4">
 
@@ -11,10 +12,13 @@
 
             <!-- Portfolio Item Row -->
             <div class="row">
+                {% if object.image.isempty %}
 
                 <div class="col-md-4">
-                    <img class="img-fluid" src="http://placehold.it/750x500" alt="">
+                    
+                    <img class="img-fluid" src="{{ object.image.url }}" alt="">
                 </div>
+                {% endif %}
 
                 <div class="col-md-4">
                     <h3 class="my-3"><small>Message : </small>{{ object.message }}</h3>
@@ -248,12 +252,9 @@
 </div>
 
 <script>
-    var swed;
     $(".comment-reply-btn").click(function(event){
         event.preventDefault();
-        swed = ($(this).parent().parent().next());
-        console.log($(this).parent().parent().next().next(".add_reply"));
-        $(this).parent().next(".add_reply").fadeToggle;
+        $(this).parent().parent().next("div").children(0).fadeToggle();
     })
 </script>
 {% endblock content %}
